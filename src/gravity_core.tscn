@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://6j53tft5b0du"]
+
+[ext_resource type="Script" uid="uid://qaud75imkrk4" path="res://src/gravity_core.gd" id="1_x4ja3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cipku"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cipku"]
+radius = 4.0
+
+[sub_resource type="Animation" id="Animation_cipku"]
+resource_name = "rotation"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 6.2831855)]
+}
+
+[sub_resource type="Animation" id="Animation_x4ja3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_flj7h"]
+_data = {
+&"RESET": SubResource("Animation_x4ja3"),
+&"rotation": SubResource("Animation_cipku")
+}
+
+[node name="GravityCore" type="Node3D"]
+script = ExtResource("1_x4ja3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_cipku")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_cipku")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_flj7h")
+}
+autoplay = "rotation"
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
