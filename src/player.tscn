@@ -7302,7 +7302,6 @@ script = ExtResource("5_jump")
 script = ExtResource("6_fall")
 
 [node name="LookPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0)
 script = ExtResource("7_tpcam")
 
 [node name="PitchPivot" type="Node3D" parent="LookPivot"]

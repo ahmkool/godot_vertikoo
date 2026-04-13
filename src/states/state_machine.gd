@@ -6,6 +6,8 @@ var _current: PlayerState
 
 
 func _ready() -> void:
+	# Lower [process_physics_priority] runs first; keep this after the body's [align_to_gravity].
+	process_physics_priority = 1
 	var body := get_parent() as CharacterBody3D
 	for child in get_children():
 		if child is PlayerState:
@@ -27,9 +29,9 @@ func _physics_process(delta: float) -> void:
 	if _current == null:
 		return
 	var body := get_parent()
-	if body is CharacterBody3D and body.has_method(&"align_to_gravity"):
-		body.align_to_gravity()
 	var next: StringName = _current.physics_update(delta)
+	if body is CharacterBody3D and body.has_method(&"sync_collision_with_visual"):
+		body.sync_collision_with_visual()
 	if next != &"" and has_node(NodePath(str(next))):
 		_current.exit()
 		_current = get_node(NodePath(str(next))) as PlayerState

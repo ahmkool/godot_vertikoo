@@ -1,15 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgry7qcu02ipg"]
+[gd_scene load_steps=5 format=3 uid="uid://dgry7qcu02ipg"]
 
 [ext_resource type="PackedScene" uid="uid://uly64v7aqt8i" path="res://src/platform.tscn" id="1_tp5op"]
 [ext_resource type="PackedScene" uid="uid://cwg6p43un0tpo" path="res://src/player.tscn" id="2_xlegt"]
 [ext_resource type="PackedScene" uid="uid://6j53tft5b0du" path="res://src/gravity_core.tscn" id="3_0qwtu"]
+
+[sub_resource type="Environment" id="Environment_0qwtu"]
 
 [node name="World" type="Node3D"]
 
 [node name="Platform" parent="." instance=ExtResource("1_tp5op")]
 
 [node name="Platform3" parent="." instance=ExtResource("1_tp5op")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -19.798523, 0, -13.614746)
+transform = Transform3D(3.6046233, 0, 0, 0, -1.575631e-07, -3.6046233, 0, 3.6046233, -1.575631e-07, -24.332703, -14.950745, -35.267944)
 
 [node name="Platform4" parent="." instance=ExtResource("1_tp5op")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.36170292, 5.101183, -4.6767883)
@@ -26,3 +28,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [node name="GravityCore" parent="." instance=ExtResource("3_0qwtu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.924011, -0.02355957, -11.112244)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0qwtu")
