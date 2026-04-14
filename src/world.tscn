@@ -5,13 +5,26 @@
 [ext_resource type="PackedScene" uid="uid://6j53tft5b0du" path="res://src/gravity_core.tscn" id="3_0qwtu"]
 
 [sub_resource type="Environment" id="Environment_0qwtu"]
+background_mode = 1
+background_color = Color(0.1, 0.11, 0.14, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.42, 0.48, 0.58, 1)
+ambient_light_energy = 0.14
+tonemap_mode = 2
+ssao_enabled = true
+ssao_radius = 2.2
+ssao_intensity = 2.8
+ssao_power = 1.35
+ssao_detail = 0.55
+ssao_horizon = 0.08
+ssao_sharpness = 0.94
 
 [node name="World" type="Node3D"]
 
 [node name="Platform" parent="." instance=ExtResource("1_tp5op")]
 
 [node name="Platform3" parent="." instance=ExtResource("1_tp5op")]
-transform = Transform3D(3.6046233, 0, 0, 0, -1.575631e-07, -3.6046233, 0, 3.6046233, -1.575631e-07, -24.332703, -14.950745, -35.267944)
+transform = Transform3D(3.6046233, 0, 0, 0, -1.575631e-07, -3.6046233, 0, 3.6046233, -1.575631e-07, -24.332703, -14.950745, -145.26794)
 
 [node name="Platform4" parent="." instance=ExtResource("1_tp5op")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.36170292, 5.101183, -4.6767883)
@@ -22,6 +35,14 @@ transform = Transform3D(1, 0, 0, 0, 0.99029964, 0.13894843, 0, -0.13894843, 0.99
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.5657157, 0.82460034, 0, -0.82460034, -0.5657157, 0, 22.771357, 0)
 shadow_enabled = true
+shadow_opacity = 0.2
+light_energy = 1.2
+
+[node name="FillLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5657157, -0.82460034, 0, 0.82460034, 0.5657157, 0, 22.771357, 0)
+light_color = Color(0.8, 0.86, 1, 1)
+light_energy = 0.28
+shadow_enabled = false
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("2_xlegt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)

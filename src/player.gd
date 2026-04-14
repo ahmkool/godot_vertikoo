@@ -45,12 +45,8 @@ func _ready() -> void:
 
 
 ## Runs before child nodes (e.g. StateMachine) so [up_direction] is current before [move_and_slide].
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	align_to_gravity()
-	# Only while gravity is overridden/interpolating: idle never calls [smooth_rotate], so upright then.
-	var input_dir := Input.get_vector(&"ui_left", &"ui_right", &"ui_up", &"ui_down")
-	if input_dir.length_squared() < 0.01 and _uses_simulated_gravity():
-		update_body_visual_orientation(Vector3.ZERO, delta)
 
 
 ## Keeps the CharacterBody3D hitbox aligned with [Root] rotation (must stay a direct child of the body).
@@ -108,27 +104,15 @@ func get_move_direction(input_dir: Vector2) -> Vector3:
 	return dir.normalized()
 
 
-## Uprights [Root] relative to gravity and yaws toward [direction] when set; otherwise keeps yaw from mesh/camera.
+## Uprights [Root] relative to gravity and yaws toward [direction] (movement intent only; never camera-locked).
 func update_body_visual_orientation(direction: Vector3, delta: float) -> void:
 	if _body_visual == null:
 		return
+	if direction.length_squared() < 0.0001:
+		return
 	var g := get_simulated_gravity()
 	var up: Vector3 = Vector3.UP if g.length_squared() < 0.0001 else (-g.normalized())
-	var horiz: Vector3
-	if direction.length_squared() > 0.0001:
-		horiz = direction - up * direction.dot(up)
-	else:
-		# Camera / rig forward only — do not use mesh [-Z] here or it feeds back and jitters each frame.
-		var fwd: Vector3
-		if look_pivot != null:
-			fwd = (-look_pivot.global_transform.basis.z).slide(up)
-		else:
-			fwd = (-_body_visual.global_transform.basis.z).slide(up)
-		if fwd.length_squared() < 0.0001:
-			fwd = Vector3.FORWARD.slide(up)
-		if fwd.length_squared() < 0.0001:
-			fwd = Vector3.RIGHT.slide(up)
-		horiz = fwd
+	var horiz: Vector3 = direction - up * direction.dot(up)
 	if horiz.length_squared() < 0.0001:
 		return
 	horiz = horiz.normalized()
